@@ -1,5 +1,22 @@
 using System;
 using System.Numerics;
+
+// code的布局逻辑：
+/*
+ * 1. 申明变量
+ * 2. Unity预定义的方法（Start, Update, FixedUpdate等）
+ * 3. public方法
+ * 4. private方法
+ */ 
+
+// 在变量中，也有一个顺序：
+/*
+ * Parameter变量 - for tuneing,typically set in the editor;
+ * Cache变量 - for component references;references for readability or speed;
+ * State变量 - for other variables that track the current state of the object;
+ */
+
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Vector3 = UnityEngine.Vector3;
@@ -9,7 +26,7 @@ using Vector3 = UnityEngine.Vector3;
  * 变量用驼峰命名法
  */
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class Movement : MonoBehaviour
 {
     //在代码的最上方都要“申明变量”
     //格式是：类型名称+具体的变量的名字（自己取）
@@ -17,22 +34,22 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     [SerializeField] private InputAction thrust;
     //InputAction 是 Unity 的 Input System 中的一个类，用于定义输入行为（例如按键、鼠标点击等）。
-
     [SerializeField] private InputAction rotation;
-
     [SerializeField] private float thrustStrength = 100f;
     //这是基于数字的一个变量，所以要用float
-
     [SerializeField] private float rotationStrength = 100f;
+    [SerializeField] private AudioClip mainEngine;
 
     private Rigidbody rb;
     //Rigidbody：是 Unity 中的一个组件，用于为游戏对象添加物理特性（如重力、碰撞、力等）。
+    AudioSource audioSource; 
 
 
     //“()” 用于表示：这是一个方法,加了这个()，Unity才知道这个是在调用一个预定俗成的方法；
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
     //表示：在开始的时候要调取当前的rigidboby，并且让变量rb的初始值=这个当前的值；
     //GetComponent<T>()：是Unity提供的方法，用于获取当前游戏对象上挂载的指定类型的组件;
@@ -57,6 +74,14 @@ public class NewMonoBehaviourScript : MonoBehaviour
         if (thrust.IsPressed())
         {
             rb.AddRelativeForce(Vector3.up * thrustStrength * Time.fixedDeltaTime);
+            if (!audioSource.isPlaying)
+            {
+                audioSource.PlayOneShot(mainEngine);
+            }
+        }
+        else
+        {
+            audioSource.Stop();
         }
     }
     //AddRelativeForce（）是Rigidbody 的一个方法，用于在对象的局部坐标系中施加力；
@@ -79,7 +104,9 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     private void ApplyRotation(float rotationThisFrame) // 括号里，是方法的“形式参数”
     {
+        rb.freezeRotation = true;
         transform.Rotate(Vector3.forward * rotationThisFrame * Time.fixedDeltaTime);
         //在这个代码中，“.”可以理解为“的”，而括号中就是填具体的参数，括号内的逻辑决定了物体如何旋转
+        rb.freezeRotation = false;
     }
 }
