@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: ccf8a84dc01db43e0b5987cc49bd0885, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -497,7 +497,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 0}
+    TrackingTarget: {fileID: 1016357663}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
@@ -627,6 +627,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e1f89787222ef843908cf188cb50564, type: 3}
+--- !u!4 &1016357663 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4991562476415666445, guid: 9e1f89787222ef843908cf188cb50564, type: 3}
+  m_PrefabInstance: {fileID: 1016357662}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1568576155
 GameObject:
   m_ObjectHideFlags: 0
